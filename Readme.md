@@ -52,3 +52,5 @@
 - LotteryTicket `generates` DiscountCode
 - Guest `can receive a` Discount,
 - Room `can be assigned to` Reservation
+
+

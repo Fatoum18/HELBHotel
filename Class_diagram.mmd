@@ -1,0 +1,100 @@
+classDiagram
+    class Hotel {
+        +String name
+        +String address
+        +int starRating
+        +addFloor(Floor)
+        +addRoom(Room)
+        +processReservation(Reservation)
+    }
+
+    class Floor {
+        +int floorNumber
+        +String name
+        +addRoom(Room)
+    }
+
+    class Room {
+        +int roomNumber
+        +String type
+        +double pricePerNight
+        +boolean isAvailable
+        +assignToReservation(Reservation)
+    }
+
+    class Reservation {
+        +Date checkInDate
+        +Date checkOutDate
+        +double totalAmount
+        +String status
+        +processPayment()
+        +cancel()
+    }
+
+    class Guest {
+        +String name
+        +String email
+        +String phone
+        +makeReservation(Room, Date, Date)
+        +leaveReview(Reservation, int, String)
+        +useDiscountCode(DiscountCode)
+    }
+
+    class Operator {
+        +String name
+        +String employeeId
+        +manageReservation(Reservation)
+        +assignRoom(Reservation, Room)
+        +processCheckout(Reservation)
+    }
+
+    class Review {
+        +int rating
+        +String comment
+        +Date createdDate
+    }
+
+    class LotteryTicket {
+        +String code
+        +Date issueDate
+        +Date expiryDate
+        +boolean isUsed
+        +generateDiscountCode()
+    }
+
+    class DiscountCode {
+        +String code
+        +double discountPercentage
+        +Date expiryDate
+        +boolean isUsed
+        +apply(Reservation)
+    }
+
+    Hotel "1" --* "n" Floor : has
+    Hotel "1" --* "n" Room : has
+    Hotel "1" -- "n" Reservation : processes
+
+    Floor "1" --* "n" Room : contains
+    Floor "n" --o "1" Hotel : belongs to
+
+    Room "n" --o "1" Floor : belongs to
+    Room "1" -- "n" Reservation : assigned to
+    Room "1" -- "n" Review : reviewed by
+
+    Reservation "n" --o "1" Guest : belongs to
+    Reservation "n" -- "1" Room : assigned to
+    Reservation "n" -- "1" Operator : handled by
+    Reservation "1" -- "1" Review : associated with
+
+    Guest "1" -- "n" Reservation : makes
+    Guest "1" -- "n" Review : leaves
+    Guest "1" -- "n" LotteryTicket : receives
+    Guest "1" -- "n" DiscountCode : uses
+
+    Operator "1" -- "n" Reservation : manages
+
+    Review "n" --o "1" Guest : given by
+
+    LotteryTicket "1" ..> "1" Review : based on rating
+    LotteryTicket "1" ..> "1" Room : based on type
+    LotteryTicket "1" -- "n" DiscountCode : generates
