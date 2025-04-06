@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.helb.helbhotel.VerificationCodeView"
+            prefHeight="400.0" prefWidth="600.0"
+            style="-fx-border-color: black; -fx-border-radius: 10; -fx-background-radius: 10; -fx-padding: 10;">
+
+    <!-- Top Title Bar -->
+    <Pane layoutX="0" layoutY="0" prefWidth="600" prefHeight="40"
+          style="-fx-border-color: black; -fx-border-width: 0 0 1 0;">
+        <Label layoutX="200" layoutY="10" text="Fenêtre de vérification de code"
+               style="-fx-font-size: 14px; -fx-font-weight: bold;" />
+    </Pane>
+
+    <!-- Middle Content Area -->
+    <Pane layoutX="50" layoutY="60" prefWidth="500" prefHeight="300">
+
+        <!-- Code Input Label with Border -->
+        <Label layoutX="20" layoutY="20" text="Entrez le code (10 caractères )"
+               style="-fx-border-color: black; -fx-padding: 4;" />
+
+        <!-- Text Field -->
+        <TextField fx:id="codeTextField" layoutX="250" layoutY="15" prefWidth="200" />
+
+        <!-- Status Label with Border -->
+        <Label fx:id="statusLabel" layoutX="20" layoutY="80" text="Aucun code valide actuellement"
+               style="-fx-border-color: black; -fx-padding: 4;" />
+
+        <!-- Red Cross Icon -->
+        <Label layoutX="300" layoutY="60" text="✖"
+               style="-fx-text-fill: darkred; -fx-font-size: 48px;" />
+    </Pane>
+
+</AnchorPane>
