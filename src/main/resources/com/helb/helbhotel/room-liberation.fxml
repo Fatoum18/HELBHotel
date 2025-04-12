@@ -3,11 +3,11 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-border-color: black; -fx-border-radius: 10; -fx-background-radius: 10; -fx-padding: 10;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.helb.helbhotel.HelloController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-border-color: black; -fx-border-radius: 10; -fx-background-radius: 10; -fx-padding: 10;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.helb.helbhotel.VerificationCodeView">
 
     <!-- Top Title Bar (No border on this label) -->
     <Pane layoutX="0" layoutY="0" prefHeight="40" prefWidth="600" style="-fx-border-color: black; -fx-border-width: 0 0 1 0;">
-        <Label layoutX="180" layoutY="10" style="-fx-font-size: 14px; -fx-font-weight: bold;" text="Fenêtre de réservation de chambre" />
+        <Label layoutX="180" layoutY="10" style="-fx-font-size: 14px; -fx-font-weight: bold;" text="Fenêtre de libération de chambre" />
     </Pane>
 
     <!-- Left section with room options -->
@@ -25,13 +25,9 @@
     <Pane layoutX="300" layoutY="40" prefHeight="360" prefWidth="300">
 
         <!-- Label with border -->
-        <Label alignment="CENTER" layoutX="71.0" layoutY="80.0" style="-fx-border-color: black; -fx-padding: 4;" text="Proposition" />
+        <Label alignment="CENTER" layoutX="53.0" layoutY="137.0" prefHeight="27.0" prefWidth="154.0" style="-fx-border-color: black; -fx-padding: 4;" text="Libérer la chambre" />
 
-        <!-- TextField styled like label with border -->
-        <TextField fx:id="propositionField" alignment="CENTER" layoutX="156.0" layoutY="80.0" prefWidth="60" style="-fx-border-color: black;" text="A1L" />
-
-        <!-- Confirm Button with border -->
-        <Button fx:id="confirmButton" layoutX="90" layoutY="140" prefWidth="120" style="-fx-border-color: black;" text="Confirmer" />
+      
     </Pane>
 
 </AnchorPane>

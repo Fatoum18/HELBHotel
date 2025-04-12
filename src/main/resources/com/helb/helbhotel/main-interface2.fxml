@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-border-color: black; -fx-border-radius: 10; -fx-background-radius: 10; -fx-padding: 10;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.helb.helbhotel.HelloController">
+
+
+    <children>
+        <HBox layoutX="20" layoutY="10" spacing="5">
+            <children>
+                <Button prefWidth="60" style="-fx-border-color: black; -fx-border-radius: 10; -fx-background-radius: 10;" text="Luxe" />
+                <Button prefWidth="80" style="-fx-border-color: black; -fx-border-radius: 10; -fx-background-radius: 10;" text="Business" />
+                <Button prefWidth="100" style="-fx-border-color: black; -fx-border-radius: 10; -fx-background-radius: 10;" text="Economique" />
+            </children>
+        </HBox>
+
+        <!-- Floor label and combo -->
+        <Label layoutX="20" layoutY="50" style="-fx-border-color: black; -fx-padding: 4;" text="Floor : A1" />
+        <ComboBox layoutX="100" layoutY="45" prefWidth="20" />
+
+        <!-- Left room panel -->
+        <Pane layoutX="20" layoutY="90" prefHeight="450" prefWidth="350" style="-fx-border-color: black; -fx-border-radius: 30; -fx-background-radius: 30;">
+            <children>
+                <VBox layoutX="30" layoutY="20" spacing="20">
+                    <children>
+                        <HBox spacing="30">
+                            <children>
+                                <Button prefHeight="60" prefWidth="60" style="-fx-background-color: #dbcce3; -fx-border-color: black; -fx-border-radius: 10; -fx-background-radius: 10;" text="A1L" />
+                                <Button prefHeight="60" prefWidth="60" style="-fx-background-color: #cce1f2; -fx-border-color: black; -fx-border-radius: 10; -fx-background-radius: 10;" text="A2B" />
+                                <Button prefHeight="60" prefWidth="60" style="-fx-background-color: #f2c2c2; -fx-border-color: black; -fx-border-radius: 10; -fx-background-radius: 10;" text="A3L" />
+                            </children>
+                        </HBox>
+                        <HBox spacing="30">
+                            <children>
+                                <Button prefHeight="60" prefWidth="60" style="-fx-background-color: #f9e4b7; -fx-border-color: black; -fx-border-radius: 10; -fx-background-radius: 10;" text="A4E" />
+                                <Button prefHeight="60" prefWidth="60" style="-fx-background-color: #f9e4b7; -fx-border-color: black; -fx-border-radius: 10; -fx-background-radius: 10;" text="A5E" />
+                            </children>
+                        </HBox>
+                        <HBox spacing="30">
+                            <children>
+                                <Button prefHeight="60" prefWidth="60" style="-fx-background-color: #f2c2c2; -fx-border-color: black; -fx-border-radius: 10; -fx-background-radius: 10;" text="A6E" />
+                                <Button prefHeight="60" prefWidth="60" style="-fx-background-color: #f9e4b7; -fx-border-color: black; -fx-border-radius: 10; -fx-background-radius: 10;" text="A7E" />
+                            </children>
+                        </HBox>
+                        <HBox spacing="30">
+                            <children>
+                                <Button prefHeight="60" prefWidth="60" style="-fx-background-color: #cce1f2; -fx-border-color: black; -fx-border-radius: 10; -fx-background-radius: 10;" text="A8B" />
+                                <Button prefHeight="60" prefWidth="60" style="-fx-background-color: #f2c2c2; -fx-border-color: black; -fx-border-radius: 10; -fx-background-radius: 10;" text="A9B" />
+                            </children>
+                        </HBox>
+                    </children>
+                </VBox>
+            </children>
+        </Pane>
+
+        <!-- Right panel -->
+        <Pane layoutX="400" layoutY="20" prefHeight="550" prefWidth="370" style="-fx-border-color: black; -fx-border-radius: 30; -fx-background-radius: 30;">
+            <children>
+                <VBox layoutX="20" layoutY="20" spacing="10">
+                    <children>
+                        <Button prefWidth="300" style="-fx-border-color: black; -fx-border-radius: 10; -fx-background-radius: 10;" text="Verify Code" />
+                        <HBox spacing="5">
+                            <children>
+                                <Button prefWidth="250" style="-fx-border-color: black; -fx-border-radius: 10; -fx-background-radius: 10;" text="Random Assignment" />
+                                <ComboBox prefWidth="20" />
+                            </children>
+                        </HBox>
+                        <HBox spacing="5">
+                            <children>
+                                <Label style="-fx-border-color: black; -fx-padding: 4;" text="Sort by : Name" />
+                                <ComboBox prefWidth="20" />
+                            </children>
+                        </HBox>
+                    </children>
+                </VBox>
+
+                <!-- Assigned guests -->
+                <VBox alignment="CENTER" layoutX="20" layoutY="140" spacing="15">
+                    <children>
+                        <HBox spacing="10">
+                            <children>
+                                <Label style="-fx-border-color: black; -fx-background-color: #dbcce3; -fx-padding: 8; -fx-border-radius: 10; -fx-background-radius: 10;" text="A.Anderson&#10;A1L" />
+                                <Button style="-fx-border-color: black; -fx-border-radius: 10;" text="⟳" />
+                            </children>
+                        </HBox>
+
+                        <HBox spacing="10">
+                            <children>
+                                <Label style="-fx-border-color: black; -fx-background-color: #f9e4b7; -fx-padding: 8; -fx-border-radius: 10; -fx-background-radius: 10;" text="B.Brown&#10;A4E" />
+                                <Button style="-fx-border-color: black; -fx-border-radius: 10;" text="⟳" />
+                            </children>
+                        </HBox>
+                        <HBox spacing="10">
+                            <children>
+                                <Label style="-fx-border-color: black; -fx-background-color: #f9e4b7; -fx-padding: 8; -fx-border-radius: 10; -fx-background-radius: 10;" text="C.Crow&#10;C4E" />
+                                <Button style="-fx-border-color: black; -fx-border-radius: 10;" text="⟳" />
+                            </children>
+                        </HBox>
+
+                    </children>
+                </VBox>
+
+                <ScrollBar layoutX="340" layoutY="10" orientation="VERTICAL" prefHeight="520" />
+            </children>
+        </Pane>
+
+
+    </children>
+
+
+
+</AnchorPane>
