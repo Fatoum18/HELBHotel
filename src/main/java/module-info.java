@@ -11,4 +11,6 @@ module com.helb.helbhotel {
 
     opens com.helb.helbhotel to javafx.fxml;
     exports com.helb.helbhotel;
+    exports com.helb.helbhotel.config;
+    opens com.helb.helbhotel.config to javafx.fxml;
 }

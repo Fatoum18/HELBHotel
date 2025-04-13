@@ -3,7 +3,11 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-border-color: black; -fx-border-radius: 10; -fx-background-radius: 10; -fx-padding: 10;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.helb.helbhotel.HelloController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0"
+            style="-fx-border-color: black; -fx-border-radius: 10; -fx-background-radius: 10; -fx-padding: 10;"
+            xmlns="http://javafx.com/javafx/17.0.2-ea"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.helb.helbhotel.MainController">
 
 
     <children>

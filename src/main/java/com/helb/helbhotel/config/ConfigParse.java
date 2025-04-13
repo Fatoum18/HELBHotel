@@ -1,4 +1,4 @@
-package com.helb.helbhotel;
+package com.helb.helbhotel.config;
 import java.io.*;
 import java.net.URISyntaxException;
 import java.util.*;
