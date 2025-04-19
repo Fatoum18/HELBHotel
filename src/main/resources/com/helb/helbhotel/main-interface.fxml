@@ -3,25 +3,13 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0"
-            style="-fx-border-color: black; -fx-border-radius: 10; -fx-background-radius: 10; -fx-padding: 10;"
-            xmlns="http://javafx.com/javafx/17.0.2-ea"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.helb.helbhotel.MainController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-border-color: black; -fx-border-radius: 10; -fx-background-radius: 10; -fx-padding: 10;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.helb.helbhotel.MainController">
 
 
     <children>
-        <HBox layoutX="20" layoutY="10" spacing="5">
-            <children>
-                <Button prefWidth="60" style="-fx-border-color: black; -fx-border-radius: 10; -fx-background-radius: 10;" text="Luxe" />
-                <Button prefWidth="80" style="-fx-border-color: black; -fx-border-radius: 10; -fx-background-radius: 10;" text="Business" />
-                <Button prefWidth="100" style="-fx-border-color: black; -fx-border-radius: 10; -fx-background-radius: 10;" text="Economique" />
-            </children>
-        </HBox>
+        <HBox fx:id="roomTypeButtonsContainer" layoutX="20" layoutY="10" prefHeight="30"  />
 
-        <!-- Floor label and combo -->
-        <Label layoutX="20" layoutY="50" style="-fx-border-color: black; -fx-padding: 4;" text="Floor : A1" />
-        <ComboBox layoutX="100" layoutY="45" prefWidth="20" />
+        <ComboBox fx:id="floorComboBox" layoutX="20.0" layoutY="55.0" prefHeight="24.0" prefWidth="187.0" />
 
         <!-- Left room panel -->
         <Pane layoutX="20" layoutY="90" prefHeight="450" prefWidth="350" style="-fx-border-color: black; -fx-border-radius: 30; -fx-background-radius: 30;">

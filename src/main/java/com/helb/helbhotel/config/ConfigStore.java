@@ -2,6 +2,8 @@ package com.helb.helbhotel.config;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,19 +47,23 @@ public final class ConfigStore {
 
 
     @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
     public static  final class Floor {
         private String name;
         private List<Room> rooms;
 
-        public Floor(){
-
-        }
         public  Floor(String name){
-            this.name = name;
+                this.name = name;
+                this.rooms = new ArrayList<>();
         }
 
         public void addRoom(Room room){
             rooms.add(room);
+        }
+
+        public String getFullName(){
+                return  "Floor: "+name;
         }
 
     }
@@ -65,8 +71,8 @@ public final class ConfigStore {
     @Data
     @AllArgsConstructor  // creer un constructeur qui prend tout les attr en argument
     public static  final class Room {
-        private String name;
-        private String code;
+        private String floorPrefix;
+        private int roomNumber;
         private String roomTypeCode;
 
     }

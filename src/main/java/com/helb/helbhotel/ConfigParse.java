@@ -1,4 +1,6 @@
-package com.helb.helbhotel.config;
+package com.helb.helbhotel;
+import com.helb.helbhotel.config.ConfigStore;
+
 import java.io.*;
 import java.net.URISyntaxException;
 import java.util.*;
@@ -6,9 +8,12 @@ import java.util.*;
 public class ConfigParse {
 
     public static void main(String[] args) {
+        ConfigParse.load();
+    }
+
+    public  static void load(){
         try {
             File file = new File(ConfigParse.class.getResource(".hconfig").toURI());
-
             List<String> lines = readFile(file); // Your file name here
             processLines(lines);
         } catch (IOException e) {
@@ -32,14 +37,15 @@ public class ConfigParse {
     }
 
     private static void processLines(List<String> lines) {
+        int totalLine = lines.size();
         if (lines.isEmpty()) {
             throw new IllegalArgumentException("Error: The file is empty. First line expected.");
         }
 
-        int numberOfLines;
+        int floorCount;
         try {
-            numberOfLines = Integer.parseInt(lines.get(0));
-            if (numberOfLines < 1) {
+            floorCount = Integer.parseInt(lines.get(0));
+            if (floorCount < 1) {
                 throw new IllegalArgumentException("Error: The number of floors must contain an integer strictly greater than 0.");
             }
         } catch (NumberFormatException e) {
@@ -47,24 +53,42 @@ public class ConfigParse {
         }
 
         // Vérification du nombre réel de lignes fournies après la première ligne
-        if (lines.size() - 1 < numberOfLines) {
-            throw new IllegalArgumentException("Error : There are " + numberOfLines +
-                    " floor(s),but only " + (lines.size() - 1) + " floor(s) have been provided.");
+        if (lines.size()<=1) {
+            throw new IllegalArgumentException("Error : No room configuration found");
         }
 
         // Process from line index 1 onwards
-        for (int i = 1; i <= numberOfLines && i < lines.size(); i++) {
-            String line = lines.get(i).replace(",", "").replaceAll("\\s+", "");
-            char rowLabel = (char) ('A' + i - 1);
+        for (int i = 0; i <floorCount; i++) {
 
-            for (int j = 0; j < line.length(); j++) {
-                char ch = line.charAt(j);
-                if (ch == ('B') || ch == ('E') || ch == ('L'))  {
-                    // Output format: A1B
-                    System.out.println(rowLabel + "" + (j + 1) + ch);
+            char floorPrefix = (char) ('A' + i);
+            ConfigStore.Floor floor = new ConfigStore.Floor(floorPrefix + "");
+
+            System.out.println(" ====== floor "+floorPrefix+"======");
+            int roomCount = 1;
+            for  (int lineCount = 1; lineCount<totalLine; lineCount++){
+
+                String line = lines.get(lineCount).replace(",", "").replaceAll("\\s+", "");
+
+                for (int j = 0; j < line.length(); j++) {
+                    char ch = line.charAt(j);
+                    if (ch == ('B') || ch == ('E') || ch == ('L'))  {
+                        // Output format: A1B
+                        System.out.print(floorPrefix + "" + roomCount + ch);
+                        roomCount++;
+                        floor.addRoom(new ConfigStore.Room(floorPrefix+"",roomCount,ch+""));
+                    }else if (ch == ('Z'))  {
+                        System.out.print("Z");
+                        floor.addRoom(new ConfigStore.Room(floorPrefix+"",roomCount,""));
+                    }
+                    System.out.print(" ");
+
+                    // if Z, skip (implicitly done by not printing)
                 }
-                // if Z, skip (implicitly done by not printing)
+
+                System.out.println();
             }
+            ConfigStore.addFloor(floor);
+
         }
     }
 }
