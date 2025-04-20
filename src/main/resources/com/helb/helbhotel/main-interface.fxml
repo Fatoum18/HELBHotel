@@ -11,43 +11,11 @@
 
         <ComboBox fx:id="floorComboBox" layoutX="20.0" layoutY="55.0" prefHeight="24.0" prefWidth="187.0" />
 
-        <!-- Left room panel -->
-        <Pane layoutX="20" layoutY="90" prefHeight="450" prefWidth="350" style="-fx-border-color: black; -fx-border-radius: 30; -fx-background-radius: 30;">
-            <children>
-                <VBox layoutX="30" layoutY="20" spacing="20">
-                    <children>
-                        <HBox spacing="30">
-                            <children>
-                                <Button prefHeight="60" prefWidth="60" style="-fx-background-color: #dbcce3; -fx-border-color: black; -fx-border-radius: 10; -fx-background-radius: 10;" text="A1L" />
-                                <Button prefHeight="60" prefWidth="60" style="-fx-background-color: #cce1f2; -fx-border-color: black; -fx-border-radius: 10; -fx-background-radius: 10;" text="A2B" />
-                                <Button prefHeight="60" prefWidth="60" style="-fx-background-color: #f2c2c2; -fx-border-color: black; -fx-border-radius: 10; -fx-background-radius: 10;" text="A3L" />
-                            </children>
-                        </HBox>
-                        <HBox spacing="30">
-                            <children>
-                                <Button prefHeight="60" prefWidth="60" style="-fx-background-color: #f9e4b7; -fx-border-color: black; -fx-border-radius: 10; -fx-background-radius: 10;" text="A4E" />
-                                <Button prefHeight="60" prefWidth="60" style="-fx-background-color: #f9e4b7; -fx-border-color: black; -fx-border-radius: 10; -fx-background-radius: 10;" text="A5E" />
-                            </children>
-                        </HBox>
-                        <HBox spacing="30">
-                            <children>
-                                <Button prefHeight="60" prefWidth="60" style="-fx-background-color: #f2c2c2; -fx-border-color: black; -fx-border-radius: 10; -fx-background-radius: 10;" text="A6E" />
-                                <Button prefHeight="60" prefWidth="60" style="-fx-background-color: #f9e4b7; -fx-border-color: black; -fx-border-radius: 10; -fx-background-radius: 10;" text="A7E" />
-                            </children>
-                        </HBox>
-                        <HBox spacing="30">
-                            <children>
-                                <Button prefHeight="60" prefWidth="60" style="-fx-background-color: #cce1f2; -fx-border-color: black; -fx-border-radius: 10; -fx-background-radius: 10;" text="A8B" />
-                                <Button prefHeight="60" prefWidth="60" style="-fx-background-color: #f2c2c2; -fx-border-color: black; -fx-border-radius: 10; -fx-background-radius: 10;" text="A9B" />
-                            </children>
-                        </HBox>
-                    </children>
-                </VBox>
-            </children>
-        </Pane>
-
+        <!-- Left Room Panel -->
+        <Pane fx:id="roomPanel" layoutX="20" layoutY="90" prefHeight="450" prefWidth="400"
+              style="-fx-border-color: black; -fx-border-radius: 30; -fx-background-radius: 30;" />
         <!-- Right panel -->
-        <Pane layoutX="400" layoutY="20" prefHeight="550" prefWidth="370" style="-fx-border-color: black; -fx-border-radius: 30; -fx-background-radius: 30;">
+        <Pane layoutX="450" layoutY="20" prefHeight="550" prefWidth="370" style="-fx-border-color: black; -fx-border-radius: 30; -fx-background-radius: 30;">
             <children>
                 <VBox layoutX="20" layoutY="20" spacing="10">
                     <children>

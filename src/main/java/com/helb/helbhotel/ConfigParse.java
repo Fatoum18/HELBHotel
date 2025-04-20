@@ -74,11 +74,11 @@ public class ConfigParse {
                     if (ch == ('B') || ch == ('E') || ch == ('L'))  {
                         // Output format: A1B
                         System.out.print(floorPrefix + "" + roomCount + ch);
-                        roomCount++;
                         floor.addRoom(new ConfigStore.Room(floorPrefix+"",roomCount,ch+""));
+                        roomCount++;
                     }else if (ch == ('Z'))  {
                         System.out.print("Z");
-                        floor.addRoom(new ConfigStore.Room(floorPrefix+"",roomCount,""));
+                        floor.addRoom(new ConfigStore.Room(floorPrefix+"",roomCount,ch+""));
                     }
                     System.out.print(" ");
 
