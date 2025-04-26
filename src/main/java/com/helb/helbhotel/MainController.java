@@ -1,6 +1,9 @@
 package com.helb.helbhotel;
 
 import com.helb.helbhotel.config.ConfigStore;
+import com.helb.helbhotel.config.ReservationLoader;
+import com.helb.helbhotel.model.AssignmentMode;
+import com.helb.helbhotel.model.Reservation;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -13,10 +16,15 @@ import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
 import javafx.scene.layout.*;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.Objects;
 
 public class MainController {
 
@@ -31,9 +39,17 @@ public class MainController {
     private Label welcomeText;
 
     @FXML
+    private ComboBox<String> assignmentComboBox;
+
+    @FXML
     protected void onHelloButtonClick() {
         welcomeText.setText("Welcome to JavaFX Application!");
     }
+
+    @FXML
+    private ListView<Reservation> reservationListView;
+
+    private List<Reservation> validReservations; // loaded previously
     @FXML
     public void initialize() {
 
@@ -43,10 +59,60 @@ public class MainController {
         // Initialize floors
         initializeFloorComboBox();
 
+        initializeAssignmentMode();
+
+        validReservations = ReservationLoader.loadValidReservations();
+        if(validReservations!=null){
+            initializeReservations();
+        }
 
 
     }
 
+    private void initializeReservations() {
+        reservationListView.setCellFactory(new Callback<>() {
+            @Override
+            public ListCell<Reservation> call(ListView<Reservation> listView) {
+                return new ListCell<>() {
+                    @Override
+                    protected void updateItem(Reservation reservation, boolean empty) {
+                        super.updateItem(reservation, empty);
+
+                        if (empty || reservation == null) {
+                            setGraphic(null);
+                        } else {
+                            try {
+                                FXMLLoader loader = new FXMLLoader(getClass().getResource("reservation_item_view.fxml"));
+                                HBox hBox = loader.load();
+                                ReservationItemViewController controller = loader.getController();
+                                controller.setReservation(reservation);
+                                setGraphic(hBox);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                };
+            }
+        });
+
+        // Load reservations
+        reservationListView.getItems().setAll(validReservations);
+    }
+    public void initializeAssignmentMode() {
+        ObservableList<String> assignmentLabels = FXCollections.observableArrayList();
+        for (AssignmentMode mode : AssignmentMode.values()) {
+            assignmentLabels.add(mode.getLabel());
+        }
+        assignmentComboBox.setItems(assignmentLabels);
+        assignmentComboBox.getSelectionModel().selectFirst();
+
+        assignmentComboBox.setOnAction(event -> {
+            String selectedLabel = assignmentComboBox.getSelectionModel().getSelectedItem();
+            AssignmentMode selectedMode = AssignmentMode.fromLabel(selectedLabel);
+            System.out.println("Selected mode code: " + selectedMode); // <- You get ENUM here
+        });
+    }
 
     private void initializeRoomTypeButtons() {
         roomTypeButtonsContainer.getChildren().clear();
@@ -222,11 +288,17 @@ public class MainController {
 
     public void handleVerifyCode(ActionEvent event) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/com/helb/helbhotel/verification-code.fxml"));
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
+
+            Parent root = FXMLLoader.load(Objects.requireNonNull(MainApplication.class.getResource("verification-code.fxml")));
+
+            Stage dialogStage = new Stage();
+            dialogStage.initModality(Modality.APPLICATION_MODAL);
+            dialogStage.initOwner(((Node) event.getSource()).getScene().getWindow());
+
+            dialogStage.setTitle("Verification code");
+            dialogStage.setScene(new Scene(root));
+
+            dialogStage.showAndWait();
         } catch (IOException e) {
             e.printStackTrace();
             System.err.println("Impossible de charger la vue de vérification de code: " + e.getMessage());
