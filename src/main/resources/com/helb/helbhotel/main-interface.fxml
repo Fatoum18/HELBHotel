@@ -19,7 +19,7 @@
             <children>
                 <VBox layoutX="20" layoutY="20" spacing="10">
                     <children>
-                        <Button prefWidth="300" style="-fx-border-color: black; -fx-border-radius: 10; -fx-background-radius: 10;" text="Verify Code" />
+                        <Button  fx:id="verifyCodeButton"  prefWidth="300" style="-fx-border-color: black; -fx-border-radius: 10; -fx-background-radius: 10;" text="Verify Code"  onAction="#handleVerifyCode" />
                         <HBox spacing="5">
                             <children>
                                 <Button prefWidth="250" style="-fx-border-color: black; -fx-border-radius: 10; -fx-background-radius: 10;" text="Random Assignment" />
