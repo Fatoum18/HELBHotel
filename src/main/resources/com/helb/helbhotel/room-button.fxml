@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.StackPane?>
+
+<StackPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1"
+           fx:id="roomPane" prefWidth="60" prefHeight="60"
+           style="-fx-border-color: black; -fx-border-radius: 10; -fx-background-radius: 10;">
+    <Label fx:id="roomLabel" style="-fx-font-weight: bold;" />
+</StackPane>

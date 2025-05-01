@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.HBox?>
 
-<HBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" spacing="10" fx:controller="com.helb.helbhotel.ReservationItemViewController">
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<HBox alignment="CENTER" prefWidth="200" spacing="10" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.helb.helbhotel.ReservationItemViewController">
     <children>
-        <Label fx:id="reservationLabel"
-               style="-fx-border-color: black; -fx-background-color: #dbcce3; -fx-padding: 8; -fx-border-radius: 10; -fx-background-radius: 10;" />
-        <Button fx:id="refreshButton"
-                style="-fx-border-color: black; -fx-border-radius: 10;"
-                text="⟳" />
+        <VBox alignment="CENTER"  fx:id="reservationItem" prefWidth="180" style="-fx-border-color: black; -fx-background-color: #dbcce3; -fx-padding: 8; -fx-border-radius: 10; -fx-background-radius: 10;">
+            <Label fx:id="guestLabel" text="F. Baron" />
+            <Label fx:id="roomLabel" text="A1E" />
+        </VBox>
+        <Button fx:id="refreshButton" style="-fx-border-color: black; -fx-border-radius: 10;" text="⟳" />
     </children>
 </HBox>

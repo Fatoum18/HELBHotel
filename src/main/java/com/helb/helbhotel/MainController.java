@@ -2,6 +2,7 @@ package com.helb.helbhotel;
 
 import com.helb.helbhotel.config.ConfigStore;
 import com.helb.helbhotel.config.ReservationLoader;
+import com.helb.helbhotel.config.RoomAssigner;
 import com.helb.helbhotel.model.AssignmentMode;
 import com.helb.helbhotel.model.Reservation;
 import javafx.collections.FXCollections;
@@ -47,9 +48,9 @@ public class MainController {
     }
 
     @FXML
-    private ListView<Reservation> reservationListView;
+    private ListView<RoomAssigner.PotentialAssign> reservationListView;
 
-    private List<Reservation> validReservations; // loaded previously
+    private List<RoomAssigner.PotentialAssign> validReservations; // loaded previously
     @FXML
     public void initialize() {
 
@@ -61,8 +62,9 @@ public class MainController {
 
         initializeAssignmentMode();
 
-        validReservations = ReservationLoader.loadValidReservations();
-        if(validReservations!=null){
+        List<Reservation> reservations =  ReservationLoader.loadValidReservations();
+        if(reservations!=null){
+            validReservations = RoomAssigner.assignRooms(reservations,AssignmentMode.RANDOM_ASSIGNMENT,ConfigStore.getAllRooms());
             initializeReservations();
         }
 
@@ -72,10 +74,10 @@ public class MainController {
     private void initializeReservations() {
         reservationListView.setCellFactory(new Callback<>() {
             @Override
-            public ListCell<Reservation> call(ListView<Reservation> listView) {
+            public ListCell<RoomAssigner.PotentialAssign> call(ListView<RoomAssigner.PotentialAssign> listView) {
                 return new ListCell<>() {
                     @Override
-                    protected void updateItem(Reservation reservation, boolean empty) {
+                    protected void updateItem(RoomAssigner.PotentialAssign reservation, boolean empty) {
                         super.updateItem(reservation, empty);
 
                         if (empty || reservation == null) {
@@ -85,7 +87,7 @@ public class MainController {
                                 FXMLLoader loader = new FXMLLoader(getClass().getResource("reservation_item_view.fxml"));
                                 HBox hBox = loader.load();
                                 ReservationItemViewController controller = loader.getController();
-                                controller.setReservation(reservation);
+                                controller.setPotentialAssign(reservation);
                                 setGraphic(hBox);
                             } catch (IOException e) {
                                 e.printStackTrace();
@@ -111,6 +113,11 @@ public class MainController {
             String selectedLabel = assignmentComboBox.getSelectionModel().getSelectedItem();
             AssignmentMode selectedMode = AssignmentMode.fromLabel(selectedLabel);
             System.out.println("Selected mode code: " + selectedMode); // <- You get ENUM here
+            List<Reservation> reservations =  ReservationLoader.loadValidReservations();
+            if(reservations!=null){
+                validReservations = RoomAssigner.assignRooms(reservations,selectedMode,ConfigStore.getAllRooms());
+                reservationListView.getItems().setAll(validReservations);
+            }
         });
     }
 
@@ -249,41 +256,34 @@ public class MainController {
     }
 
     private Pane createRoomButton(ConfigStore.Room room) {
-        // Create the room display
-        StackPane roomPane = new StackPane();
-        roomPane.setPrefSize(60, 60); // Fixed size for rooms
+        try {
+            // Load the FXML file
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("room-button.fxml"));
+            StackPane roomPane = loader.load();
 
-        // Set background color based on room type
-        ConfigStore.getRoomTypes().stream()
-                .filter(rt -> rt.getCode().equals(room.getRoomTypeCode()))
-                .findFirst()
-                .ifPresent(roomType -> {
-                    roomPane.setStyle(String.format(
-                            "-fx-background-color: %s; " +
-                                    "-fx-border-color: black; " +
-                                    "-fx-border-radius: 10; " +
-                                    "-fx-background-radius: 10;",
-                            roomType.getColor()
-                    ));
-                });
+            // Get references to the components
+            Label roomLabel = (Label) loader.getNamespace().get("roomLabel");
 
-        String roomType = room.getRoomTypeCode();
-        String roomNumber ="Z";
-        if(!roomType.equals("Z")){
-          roomNumber =  room.getFloorPrefix() + room.getRoomNumber()+ roomType;
+            // Set background color based on room type
+
+            roomPane.setStyle(roomPane.getStyle() + String.format("-fx-background-color: %s;", ConfigStore.getRoomColor(room.getRoomTypeCode())));
+
+            roomLabel.setText(room.getName());
+
+            // Add click handler
+            roomPane.setOnMouseClicked(event -> {
+                System.out.println("Selected room: " + room);
+            });
+
+            return roomPane;
+        } catch (IOException e) {
+            e.printStackTrace();
+            // Fallback to programmatic creation if FXML loading fails
+            StackPane fallbackPane = new StackPane();
+            fallbackPane.setPrefSize(60, 60);
+            fallbackPane.getChildren().add(new Label("Error loading room"));
+            return fallbackPane;
         }
-        // Add room number text
-        Label roomLabel = new Label(roomNumber);
-        roomLabel.setStyle("-fx-font-weight: bold;");
-        roomPane.getChildren().add(roomLabel);
-
-        // Add click handler
-        roomPane.setOnMouseClicked(event -> {
-            // Handle room selection here
-            System.out.println("Selected room: " + room);
-        });
-
-        return roomPane;
     }
 
     public void handleVerifyCode(ActionEvent event) {

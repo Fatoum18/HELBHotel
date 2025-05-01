@@ -41,7 +41,6 @@
                     </children>
                 </VBox>
 
-<!--                <ScrollBar layoutX="340" layoutY="10" orientation="VERTICAL" prefHeight="520" />-->
             </children>
         </Pane>
 

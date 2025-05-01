@@ -13,7 +13,6 @@ public final class ConfigStore {
 
     private  static final  List<RoomType> roomTypes = new ArrayList<>();
 
-
     static {
         initializeRoomTypes();
     }
@@ -38,6 +37,19 @@ public final class ConfigStore {
     }
     public static List<RoomType> getRoomTypes(){
         return new ArrayList<>(roomTypes);
+    }
+
+
+    public static List<Room> getAllRooms(){
+
+        List<Room> rooms = new ArrayList<>();
+        List<Floor> floorList =  getFloors();
+            floorList.forEach(floor -> {
+                rooms.addAll(floor.getRooms());
+            });
+
+            return  rooms;
+
     }
 
     static void  getRoomCode(String code){
@@ -75,6 +87,13 @@ public final class ConfigStore {
         private int roomNumber;
         private String roomTypeCode;
 
+
+        public String getName(){
+            if(!roomTypeCode.equals("Z"))
+                return floorPrefix + roomNumber + roomTypeCode;
+            return roomTypeCode;
+        }
+
     }
 
     @Data
@@ -83,6 +102,16 @@ public final class ConfigStore {
         private String code;
         private String name;
         private String color;
+    }
+
+
+    public static String getRoomColor(String roomTypeCode){
+
+        return ConfigStore.getRoomTypes().stream()
+                .filter(rt -> rt.getCode().equals(roomTypeCode))
+                .findFirst()
+                .map(RoomType::getColor)
+                .orElse("#fff");
     }
 }
 
