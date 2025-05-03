@@ -5,7 +5,7 @@
 
 <HBox alignment="CENTER" prefWidth="200" spacing="10" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.helb.helbhotel.ReservationItemViewController">
     <children>
-        <VBox alignment="CENTER"  fx:id="reservationItem" prefWidth="180" style="-fx-border-color: black; -fx-background-color: #dbcce3; -fx-padding: 8; -fx-border-radius: 10; -fx-background-radius: 10;">
+        <VBox alignment="CENTER"  fx:id="reservationItem" prefWidth="180" style="-fx-border-color: black; -fx-background-color: #dbcce3; -fx-padding: 8; -fx-border-radius: 10; -fx-background-radius: 10;" >
             <Label fx:id="guestLabel" text="F. Baron" />
             <Label fx:id="roomLabel" text="A1E" />
         </VBox>

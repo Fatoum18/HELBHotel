@@ -22,7 +22,6 @@ import javafx.scene.layout.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
-
 import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
@@ -33,24 +32,25 @@ public class MainController {
     public ComboBox<ConfigStore.Floor> floorComboBox;
     @FXML
     public HBox roomTypeButtonsContainer;
-
     @FXML
     public Pane roomPanel;
     @FXML
     private Label welcomeText;
-
     @FXML
     private ComboBox<String> assignmentComboBox;
+
+
 
     @FXML
     protected void onHelloButtonClick() {
         welcomeText.setText("Welcome to JavaFX Application!");
     }
-
     @FXML
     private ListView<RoomAssigner.PotentialAssign> reservationListView;
 
     private List<RoomAssigner.PotentialAssign> validReservations; // loaded previously
+
+
     @FXML
     public void initialize() {
 
@@ -69,7 +69,11 @@ public class MainController {
         }
 
 
+
+
     }
+
+
 
     private void initializeReservations() {
         reservationListView.setCellFactory(new Callback<>() {
@@ -163,7 +167,6 @@ public class MainController {
     }
 
 
-
     private void initializeFloorComboBox() {
         // Create observable list of floors
         ObservableList<ConfigStore.Floor> floors = FXCollections.observableArrayList(ConfigStore.getFloors());
@@ -207,7 +210,6 @@ public class MainController {
             floorComboBox.getSelectionModel().selectFirst();
         }
     }
-
 
 
     private void updateRoomPanel() {
@@ -265,14 +267,39 @@ public class MainController {
             Label roomLabel = (Label) loader.getNamespace().get("roomLabel");
 
             // Set background color based on room type
-
             roomPane.setStyle(roomPane.getStyle() + String.format("-fx-background-color: %s;", ConfigStore.getRoomColor(room.getRoomTypeCode())));
 
             roomLabel.setText(room.getName());
 
-            // Add click handler
+            // Add click handler to open room-liberation.fxml
             roomPane.setOnMouseClicked(event -> {
-                System.out.println("Selected room: " + room);
+                try {
+                    // Load the room-liberation.fxml file
+                    FXMLLoader liberationLoader = new FXMLLoader(getClass().getResource("room-liberation.fxml"));
+                    Parent root = liberationLoader.load();
+
+                    // Create a new stage for the liberation window
+                    Stage liberationStage = new Stage();
+                    liberationStage.initModality(Modality.APPLICATION_MODAL); // Block input to other windows
+                    liberationStage.initOwner(roomPane.getScene().getWindow()); // Set owner window
+                    liberationStage.setTitle("Libération de la chambre " + room.getName());
+
+                    // Set the scene
+                    Scene scene = new Scene(root);
+                    liberationStage.setScene(scene);
+
+                    // Pass the room data to the controller if needed
+                    // If you have a controller for room-liberation.fxml, you can get it and set data:
+                    // RoomLiberationController controller = liberationLoader.getController();
+                    // controller.setRoom(room);
+
+                    // Show the window
+                    liberationStage.showAndWait();
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    System.err.println("Impossible de charger la vue de libération de chambre: " + e.getMessage());
+                }
             });
 
             return roomPane;
@@ -304,4 +331,7 @@ public class MainController {
             System.err.println("Impossible de charger la vue de vérification de code: " + e.getMessage());
         }
     }
+
+
+
 }

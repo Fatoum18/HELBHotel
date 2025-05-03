@@ -37,7 +37,7 @@
                 <!-- Assigned guests -->
                 <VBox alignment="CENTER" layoutX="20" layoutY="140" spacing="15">
                     <children>
-                        <ListView fx:id="reservationListView" layoutX="10" layoutY="10" prefWidth="300" prefHeight="400" />
+                        <ListView fx:id="reservationListView" layoutX="10" layoutY="10" prefWidth="300" prefHeight="400"/>
                     </children>
                 </VBox>
 
