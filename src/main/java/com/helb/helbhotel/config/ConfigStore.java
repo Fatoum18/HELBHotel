@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public final class ConfigStore {
     private static final List<Floor> floors = new ArrayList<>();
@@ -31,12 +33,31 @@ public final class ConfigStore {
     public static List<Floor> getFloors(){
         return new ArrayList<>(floors);
     }
-
-    public static Floor getFloor(String name){
-        for(Floor floor : floors){
-            if(floor.getName().equals(name)) return  floor;
+    public static Room findRoomByCode(String code){
+        Pattern pattern = Pattern.compile("^([A-Za-z]).*");
+        Matcher matcher = pattern.matcher(code);
+        if(matcher.find()){
+            String floorCode = matcher.group(1);
+            for(Floor floor : floors){
+                if(floor.getName().equals(floorCode)){
+                    for (Room room : floor.getRooms()){
+                        if(room.getName().equals(code)){
+                             return room;
+                        }
+                    }
+                }
+            }
         }
-        return null;
+        return  null;
+
+    }
+    public static void updateRoomStatus(String code, boolean isBusy){
+        Room room = findRoomByCode(code);
+
+        if(room!=null){
+            room.setBusy(isBusy);
+        }
+
     }
 
     public static void addRoomType(RoomType roomType){
@@ -119,10 +140,13 @@ public final class ConfigStore {
     }
 
 
-    public static String getRoomColor(String roomTypeCode){
+    public static String getRoomColor(Room room){
 
+        if(room.isBusy){
+            return "#F6CDC9";
+        }
         return ConfigStore.getRoomTypes().stream()
-                .filter(rt -> rt.getCode().equals(roomTypeCode))
+                .filter(rt -> rt.getCode().equals(room.getRoomTypeCode()))
                 .findFirst()
                 .map(RoomType::getColor)
                 .orElse("#fff");

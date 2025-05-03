@@ -6,6 +6,7 @@ import javafx.scene.control.TextField;
 import com.helb.helbhotel.config.RoomAssigner;
 import com.helb.helbhotel.model.Reservation;
 import com.helb.helbhotel.config.ConfigStore;
+import javafx.stage.Stage;
 
 import java.util.regex.Pattern;
 
@@ -35,8 +36,14 @@ public class RoomReservationController {
 
         propositionField.textProperty().addListener((observableValue, oldValue, newValue) -> {
             boolean isValid = roomPattern.matcher(newValue).matches();
+            if(isValid){
+              ConfigStore.Room room =  ConfigStore.findRoomByCode(newValue);
+                // si la chambre est trouver et elle n'est pas occupper
+                confirmButton.setDisable(room == null || room.isBusy());
+            }else{
+                confirmButton.setDisable(true);
+            }
 
-            confirmButton.setDisable(!isValid);
         });
 
         confirmButton.setDisable(true);
@@ -69,13 +76,11 @@ public class RoomReservationController {
                     " dans la chambre: " + roomProposition);
                 // A3B
 
-//            Pattern pattern = Pattern.compile("^([A-Za-z]).*")
-
-
-            // TODO: Implémenter la logique pour confirmer la réservation dans la base de données
+            // Confirmation de la reservation de la chambre
+            ConfigStore.updateRoomStatus(roomProposition,true);
 
             // Fermer la fenêtre
-            confirmButton.getScene().getWindow().hide();
+            ((Stage)confirmButton.getScene().getWindow()).close();
         }
     }
 }

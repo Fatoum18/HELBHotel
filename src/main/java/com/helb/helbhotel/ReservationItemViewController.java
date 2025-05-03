@@ -16,6 +16,11 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+
+interface  ReservationDialogListener {
+    void  onReservationClose();
+}
+
 public class ReservationItemViewController {
 
     public VBox reservationItem;
@@ -30,13 +35,17 @@ public class ReservationItemViewController {
 
     private RoomAssigner.PotentialAssign potentialAssign;
 
-    public void setPotentialAssign(RoomAssigner.PotentialAssign potentialAssign) {
+
+    public ReservationDialogListener reservationDialogListener;
+
+    public void setPotentialAssign(RoomAssigner.PotentialAssign potentialAssign,ReservationDialogListener reservationDialogListener) {
+        this.reservationDialogListener = reservationDialogListener;
         this.potentialAssign = potentialAssign;
 
         Reservation reservation = potentialAssign.getReservation();
         ConfigStore.Room room = potentialAssign.getRoom();
 
-        reservationItem.setStyle(reservationItem.getStyle() + String.format("-fx-background-color: %s;", ConfigStore.getRoomColor(room.getRoomTypeCode())));
+        reservationItem.setStyle(reservationItem.getStyle() + String.format("-fx-background-color: %s;", ConfigStore.getRoomColor(room)));
         // Example format: "A. Anderson\nA1L"
         String labelText = reservation.getFirstName().charAt(0) + ". " + reservation.getLastName();
         guestLabel.setText(labelText);
@@ -77,6 +86,8 @@ public class ReservationItemViewController {
             Scene scene = new Scene(root);
             reservationStage.setScene(scene);
             reservationStage.showAndWait();
+            if(reservationDialogListener!=null)
+                    reservationDialogListener.onReservationClose();
 
         } catch (IOException e) {
             e.printStackTrace();

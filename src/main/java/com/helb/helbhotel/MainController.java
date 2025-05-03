@@ -91,7 +91,13 @@ public class MainController {
                                 FXMLLoader loader = new FXMLLoader(getClass().getResource("reservation_item_view.fxml"));
                                 HBox hBox = loader.load();
                                 ReservationItemViewController controller = loader.getController();
-                                controller.setPotentialAssign(reservation);
+                                controller.setPotentialAssign(reservation, new ReservationDialogListener() {
+                                    @Override
+                                    public void onReservationClose() {
+                                        updateRoomPanel();
+                                    }
+                                });
+
                                 setGraphic(hBox);
                             } catch (IOException e) {
                                 e.printStackTrace();
@@ -267,7 +273,7 @@ public class MainController {
             Label roomLabel = (Label) loader.getNamespace().get("roomLabel");
 
             // Set background color based on room type
-            roomPane.setStyle(roomPane.getStyle() + String.format("-fx-background-color: %s;", ConfigStore.getRoomColor(room.getRoomTypeCode())));
+            roomPane.setStyle(roomPane.getStyle() + String.format("-fx-background-color: %s;", ConfigStore.getRoomColor(room)));
 
             roomLabel.setText(room.getName());
 
@@ -287,14 +293,9 @@ public class MainController {
                     // Set the scene
                     Scene scene = new Scene(root);
                     liberationStage.setScene(scene);
-
-                    // Pass the room data to the controller if needed
-                    // If you have a controller for room-liberation.fxml, you can get it and set data:
-                    // RoomLiberationController controller = liberationLoader.getController();
-                    // controller.setRoom(room);
-
                     // Show the window
                     liberationStage.showAndWait();
+                    updateRoomPanel();
 
                 } catch (IOException e) {
                     e.printStackTrace();
