@@ -7,6 +7,8 @@ import com.helb.helbhotel.config.RoomAssigner;
 import com.helb.helbhotel.model.Reservation;
 import com.helb.helbhotel.config.ConfigStore;
 
+import java.util.regex.Pattern;
+
 public class RoomReservationController {
 
     @FXML
@@ -16,6 +18,8 @@ public class RoomReservationController {
     private Button confirmButton;
 
     private RoomAssigner.PotentialAssign potentialAssign;
+
+    private final Pattern roomPattern = Pattern.compile("^([A-Za-z])(\\d+)([A-Za-z])$");
 
     @FXML
     public void initialize() {
@@ -28,6 +32,14 @@ public class RoomReservationController {
                 confirmReservation(roomProposition);
             }
         });
+
+        propositionField.textProperty().addListener((observableValue, oldValue, newValue) -> {
+            boolean isValid = roomPattern.matcher(newValue).matches();
+
+            confirmButton.setDisable(!isValid);
+        });
+
+        confirmButton.setDisable(true);
     }
 
     /**
@@ -55,6 +67,10 @@ public class RoomReservationController {
                     reservation.getFirstName() + " " +
                     reservation.getLastName() +
                     " dans la chambre: " + roomProposition);
+                // A3B
+
+//            Pattern pattern = Pattern.compile("^([A-Za-z]).*")
+
 
             // TODO: Implémenter la logique pour confirmer la réservation dans la base de données
 

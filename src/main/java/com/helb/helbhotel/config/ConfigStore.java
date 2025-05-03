@@ -32,6 +32,13 @@ public final class ConfigStore {
         return new ArrayList<>(floors);
     }
 
+    public static Floor getFloor(String name){
+        for(Floor floor : floors){
+            if(floor.getName().equals(name)) return  floor;
+        }
+        return null;
+    }
+
     public static void addRoomType(RoomType roomType){
         roomTypes.add(roomType);
     }
@@ -87,6 +94,13 @@ public final class ConfigStore {
         private int roomNumber;
         private String roomTypeCode;
 
+        private boolean isBusy;
+
+        public Room(String floorPrefix, int roomNumber, String roomTypeCode) {
+            this.floorPrefix = floorPrefix;
+            this.roomNumber = roomNumber;
+            this.roomTypeCode = roomTypeCode;
+        }
 
         public String getName(){
             if(!roomTypeCode.equals("Z"))
