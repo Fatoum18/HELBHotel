@@ -1,5 +1,4 @@
 package com.helb.helbhotel;
-
 import com.helb.helbhotel.config.ConfigStore;
 import com.helb.helbhotel.config.ReservationLoader;
 import com.helb.helbhotel.config.RoomAssigner;
@@ -27,7 +26,6 @@ import java.util.List;
 import java.util.Objects;
 
 public class MainController {
-
     @FXML
     public ComboBox<ConfigStore.Floor> floorComboBox;
     @FXML
@@ -38,8 +36,6 @@ public class MainController {
     private Label welcomeText;
     @FXML
     private ComboBox<String> assignmentComboBox;
-
-
 
     @FXML
     protected void onHelloButtonClick() {
@@ -68,12 +64,7 @@ public class MainController {
             initializeReservations();
         }
 
-
-
-
     }
-
-
 
     private void initializeReservations() {
         reservationListView.setCellFactory(new Callback<>() {
@@ -172,7 +163,6 @@ public class MainController {
         }
     }
 
-
     private void initializeFloorComboBox() {
         // Create observable list of floors
         ObservableList<ConfigStore.Floor> floors = FXCollections.observableArrayList(ConfigStore.getFloors());
@@ -216,7 +206,6 @@ public class MainController {
             floorComboBox.getSelectionModel().selectFirst();
         }
     }
-
 
     private void updateRoomPanel() {
         roomPanel.getChildren().clear();
@@ -332,7 +321,5 @@ public class MainController {
             System.err.println("Impossible de charger la vue de vérification de code: " + e.getMessage());
         }
     }
-
-
 
 }
