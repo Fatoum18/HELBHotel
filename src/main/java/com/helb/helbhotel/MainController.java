@@ -282,6 +282,11 @@ public class MainController {
                     // Set the scene
                     Scene scene = new Scene(root);
                     liberationStage.setScene(scene);
+
+                    // Pass the room data to the controller
+                    RoomLiberationController controller = liberationLoader.getController();
+                    controller.setRoom(room);
+
                     // Show the window
                     liberationStage.showAndWait();
                     updateRoomPanel();
