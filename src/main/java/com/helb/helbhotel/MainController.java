@@ -84,8 +84,16 @@ public class MainController {
                                 ReservationItemViewController controller = loader.getController();
                                 controller.setPotentialAssign(reservation, new ReservationDialogListener() {
                                     @Override
-                                    public void onReservationClose() {
-                                        updateRoomPanel();
+                                    public void onReservationClose(RoomAssigner.PotentialAssign potentialAssign) {
+                                        if(potentialAssign!=null){
+                                            updateRoomPanel(); // update Room Panel
+                                            validReservations.remove(potentialAssign); // remove potentialAssign from list
+                                            reservationListView.getItems().setAll(validReservations); // update listview
+                                            final boolean result = ReservationLoader.removeReservation(potentialAssign.getReservation()); // remove reservation from the csv file
+                                            System.out.println(" Deleted ? "+result);
+                                        }
+
+                                        System.out.println(potentialAssign);
                                     }
                                 });
 

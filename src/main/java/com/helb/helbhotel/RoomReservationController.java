@@ -22,6 +22,7 @@ public class RoomReservationController {
 
     private final Pattern roomPattern = Pattern.compile("^([A-Za-z])(\\d+)([A-Za-z])$");
 
+    private RoomAssigner.PotentialAssign resultData = null;
     @FXML
     public void initialize() {
         // Initialisation basique
@@ -47,6 +48,10 @@ public class RoomReservationController {
         });
 
         confirmButton.setDisable(true);
+    }
+
+    public RoomAssigner.PotentialAssign getResultData(){
+        return  resultData;
     }
 
     /**
@@ -78,6 +83,7 @@ public class RoomReservationController {
 
             // Confirmation de la reservation de la chambre
             ConfigStore.updateRoomStatus(roomProposition,true);
+            resultData = potentialAssign;
 
             // Fermer la fenêtre
             ((Stage)confirmButton.getScene().getWindow()).close();

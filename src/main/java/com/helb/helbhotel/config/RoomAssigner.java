@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 
 public class RoomAssigner {
 
+
     public static class PotentialAssign {
         private final Reservation reservation;
         private final ConfigStore.Room room;

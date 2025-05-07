@@ -18,7 +18,7 @@ import java.io.IOException;
 
 
 interface  ReservationDialogListener {
-    void  onReservationClose();
+    void  onReservationClose(RoomAssigner.PotentialAssign reservation);
 }
 
 public class ReservationItemViewController {
@@ -86,8 +86,9 @@ public class ReservationItemViewController {
             Scene scene = new Scene(root);
             reservationStage.setScene(scene);
             reservationStage.showAndWait();
+
             if(reservationDialogListener!=null)
-                    reservationDialogListener.onReservationClose();
+                    reservationDialogListener.onReservationClose(controller.getResultData());
 
         } catch (IOException e) {
             e.printStackTrace();

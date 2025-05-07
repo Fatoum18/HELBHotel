@@ -1,12 +1,9 @@
 package com.helb.helbhotel.config;
+
 import com.helb.helbhotel.ConfigParse;
 import com.helb.helbhotel.model.Reservation;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.net.URISyntaxException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +11,7 @@ public class ReservationLoader {
 
     public static List<Reservation> loadValidReservations()   {
         try{
-            File file = new File(ConfigParse.class.getResource("reservation.csv").toURI());
+            File file = new File("../reservation.csv");
             List<Reservation> validReservations = new ArrayList<>();
 
             try (BufferedReader br = new BufferedReader(new FileReader(file))) {
@@ -71,5 +68,79 @@ public class ReservationLoader {
         }
 
         return  null;
+    }
+
+    public static boolean removeReservation(Reservation reservationToRemove) {
+        try {
+            File file = new File("../reservation.csv");
+            List<String> lines = new ArrayList<>();
+            boolean removed = false;
+
+            // Read all lines from the file
+            try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+                String line;
+                // Keep the header
+                lines.add(br.readLine());
+
+                while ((line = br.readLine()) != null) {
+                    String[] fields = line.split(",", -1);
+                    if (fields.length != 6) {
+                        lines.add(line); // Keep malformed lines as-is
+                        continue;
+                    }
+
+                    // Create a reservation from the line for comparison
+                    String lastName = fields[0].trim();
+                    String firstName = fields[1].trim();
+                    String personStr = fields[2].trim();
+                    String smokerStr = fields[3].trim();
+                    String reason = fields[4].trim();
+                    String childStr = fields[5].trim();
+
+                    // Skip if fields are empty
+                    if (lastName.isEmpty() || firstName.isEmpty() || personStr.isEmpty() ||
+                            smokerStr.isEmpty() || reason.isEmpty() || childStr.isEmpty()) {
+                        lines.add(line);
+                        continue;
+                    }
+
+                    try {
+                        int personCount = Integer.parseInt(personStr);
+                        int childCount = Integer.parseInt(childStr);
+                        boolean smoker = smokerStr.equalsIgnoreCase("Fumeur");
+
+                        // Check if this line matches the reservation to remove
+                        if (reservationToRemove.getLastName().equals(lastName) &&
+                                reservationToRemove.getFirstName().equals(firstName) &&
+                                reservationToRemove.getPersonCount() == personCount &&
+                                reservationToRemove.isSmoker() == smoker &&
+                                reservationToRemove.getStayReason().equals(reason) &&
+                                reservationToRemove.getChildCount() == childCount) {
+                            // Skip adding this line (effectively removing it)
+                            removed = true;
+                        } else {
+                            lines.add(line);
+                        }
+                    } catch (NumberFormatException e) {
+                        lines.add(line); // Keep lines with invalid numbers
+                    }
+                }
+            }
+
+            // Only rewrite the file if we found and removed the reservation
+            if (removed) {
+                try (BufferedWriter bw = new BufferedWriter(new FileWriter(file))) {
+                    for (String line : lines) {
+                        bw.write(line);
+                        bw.newLine();
+                    }
+                }
+            }
+
+            return removed;
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return false;
+        }
     }
 }
