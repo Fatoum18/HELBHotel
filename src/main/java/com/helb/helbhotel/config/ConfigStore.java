@@ -149,7 +149,7 @@ public final class ConfigStore {
                 .filter(rt -> rt.getCode().equals(room.getRoomTypeCode()))
                 .findFirst()
                 .map(RoomType::getColor)
-                .orElse("#fff");
+                .orElse("#00000000");
     }
 }
 

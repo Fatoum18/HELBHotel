@@ -11,4 +11,8 @@ public class Reservation {
     private String stayReason;
     private int childCount;
     private boolean valid;
+
+    public String getFullName(){
+        return (firstName+" "+lastName).trim();
+    }
 }

@@ -3,6 +3,8 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
 <AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-border-color: black; -fx-border-radius: 10; -fx-background-radius: 10; -fx-padding: 10;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.helb.helbhotel.MainController">
 
 
@@ -27,8 +29,15 @@
                         </HBox>
                         <HBox spacing="5">
                             <children>
-                                <Label style="-fx-border-color: black; -fx-padding: 4;" text="Sort by : Name" />
-                                <ComboBox prefWidth="20" />
+                                <Label style=" -fx-padding: 4;" text="Sort by : Name" />
+                                <ComboBox prefWidth="120" fx:id="sortComboBox">
+                                    <items>
+                                        <FXCollections fx:factory="observableArrayList">
+                                            <String fx:value="Ascending" />
+                                            <String fx:value="Descending" />
+                                        </FXCollections>
+                                    </items>
+                                </ComboBox>
                             </children>
                         </HBox>
                     </children>

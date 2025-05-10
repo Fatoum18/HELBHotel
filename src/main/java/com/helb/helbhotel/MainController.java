@@ -38,6 +38,9 @@ public class MainController {
     private ComboBox<String> assignmentComboBox;
 
     @FXML
+    private ComboBox<String> sortComboBox;
+
+    @FXML
     protected void onHelloButtonClick() {
         welcomeText.setText("Welcome to JavaFX Application!");
     }
@@ -118,16 +121,46 @@ public class MainController {
         assignmentComboBox.setItems(assignmentLabels);
         assignmentComboBox.getSelectionModel().selectFirst();
 
-        assignmentComboBox.setOnAction(event -> {
-            String selectedLabel = assignmentComboBox.getSelectionModel().getSelectedItem();
-            AssignmentMode selectedMode = AssignmentMode.fromLabel(selectedLabel);
-            System.out.println("Selected mode code: " + selectedMode); // <- You get ENUM here
-            List<Reservation> reservations =  ReservationLoader.loadValidReservations();
-            if(reservations!=null){
-                validReservations = RoomAssigner.assignRooms(reservations,selectedMode,ConfigStore.getAllRooms());
-                reservationListView.getItems().setAll(validReservations);
-            }
+        sortComboBox.setOnAction(event -> {
+            sortReservation();
         });
+
+        assignmentComboBox.setOnAction(event -> {
+            handleReservation();
+        });
+    }
+
+    private  void sortReservation(){
+       String sortDirection =  sortComboBox.getSelectionModel().getSelectedItem();
+
+       if(validReservations!=null){
+
+           if(sortDirection!=null){
+               validReservations.sort((o1, o2) -> {
+                   String name1 = o1.getReservation().getFullName();
+                   String name2 = o2.getReservation().getFullName();
+                   int rawComparison = name1.compareToIgnoreCase(name2);
+
+                   int comparison =  Integer.compare(rawComparison,0);
+                   return "Ascending".equalsIgnoreCase(sortDirection) ? comparison : -comparison;
+               });
+           }
+
+           reservationListView.getItems().setAll(validReservations);
+           reservationListView.refresh();
+       }
+    }
+
+    private void handleReservation(){
+        String selectedLabel = assignmentComboBox.getSelectionModel().getSelectedItem();
+        AssignmentMode selectedMode = AssignmentMode.fromLabel(selectedLabel);
+
+        List<Reservation> reservations =  ReservationLoader.loadValidReservations();
+        if(reservations!=null){
+            validReservations = RoomAssigner.assignRooms(reservations,selectedMode,ConfigStore.getAllRooms());
+            sortReservation();
+
+        }
     }
 
     private void initializeRoomTypeButtons() {
@@ -271,8 +304,10 @@ public class MainController {
 
             // Set background color based on room type
             roomPane.setStyle(roomPane.getStyle() + String.format("-fx-background-color: %s;", ConfigStore.getRoomColor(room)));
+            if(!room.getName().equalsIgnoreCase("z")){
+                roomLabel.setText(room.getName());
+            }
 
-            roomLabel.setText(room.getName());
 
             // Add click handler to open room-liberation.fxml
             roomPane.setOnMouseClicked(event -> {
