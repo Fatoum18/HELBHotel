@@ -1,11 +1,13 @@
 package com.helb.helbhotel;
 
+import com.helb.helbhotel.config.DiscountCodeGenerator;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
@@ -59,9 +61,30 @@ public class RoomLiberationController {
             System.out.println("Chambre " + room.getName() + " libérée");
 
             handleRate(event);
+            String roomType = room.getRoomTypeCode();
+            int percent = 0;
+            if(roomType.equalsIgnoreCase("B")){
+                percent = 50;
+            }else if(roomType.equalsIgnoreCase("E")){
+                percent = 25;
+            }else if(roomType.equalsIgnoreCase("L")){
+                percent = 100;
+            }
+           String code = DiscountCodeGenerator.generateDiscountCode(percent);
+            showAlert(code);
+            System.out.println("code : "+code);
+
             // Fermer la fenêtre
             closeWindow();
         }
+    }
+
+    private void showAlert(String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Ticket");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 
     /**
