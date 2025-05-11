@@ -1,7 +1,9 @@
 package com.helb.helbhotel;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -10,6 +12,9 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import com.helb.helbhotel.config.ConfigStore;
+
+import java.io.IOException;
+import java.util.Objects;
 
 public class RoomLiberationController {
 
@@ -46,13 +51,14 @@ public class RoomLiberationController {
      * Méthode appelée lorsqu'on clique sur le bouton "Libérer la chambre"
      */
     @FXML
-    public void handleReleaseRoom() {
+    public void handleReleaseRoom(ActionEvent event) {
         if (room != null) {
             // Libérer la chambre en mettant son statut à "non occupé"
             ConfigStore.updateRoomStatus(room.getName(), false);
 
             System.out.println("Chambre " + room.getName() + " libérée");
 
+            handleRate(event);
             // Fermer la fenêtre
             closeWindow();
         }
@@ -69,6 +75,24 @@ public class RoomLiberationController {
         } else if (releaseButton != null && releaseButton.getScene() != null) {
             Stage stage = (Stage) releaseButton.getScene().getWindow();
             stage.close();
+        }
+    }
+
+    public void handleRate(ActionEvent event) {
+        try {
+
+            Parent root = FXMLLoader.load(Objects.requireNonNull(MainApplication.class.getResource("note-hotel.fxml")));
+
+            Stage dialogStage = new Stage();
+            dialogStage.initModality(Modality.APPLICATION_MODAL);
+            dialogStage.initOwner(((Node) event.getSource()).getScene().getWindow());
+
+            dialogStage.setTitle("Give Rate");
+            dialogStage.setScene(new Scene(root));
+
+            dialogStage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }

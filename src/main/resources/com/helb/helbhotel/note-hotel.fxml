@@ -5,35 +5,58 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Tooltip?>
+
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.helb.helbhotel.NoteHotelController"
-            prefHeight="400.0" prefWidth="600.0"
+            prefHeight="450.0" prefWidth="600.0"
             style="-fx-background-color: #1e1b23;">
 
-    <children>
-        <Label layoutX="280.0" layoutY="20.0" text="Note"
-               style="-fx-text-fill: white; -fx-font-size: 18px;"/>
+    <VBox alignment="CENTER" spacing="20" AnchorPane.topAnchor="20" AnchorPane.leftAnchor="20" AnchorPane.rightAnchor="20">
+        <Label text="Rate Your Stay"
+               style="-fx-text-fill: white; -fx-font-size: 24px; -fx-font-weight: bold;"/>
 
-        <HBox layoutX="120.0" layoutY="80.0" spacing="20.0" alignment="CENTER">
-            <children>
-                <Label text="★" style="-fx-font-size: 32px; -fx-text-fill: #007bff;"/>
-                <Label text="☆" style="-fx-font-size: 32px; -fx-text-fill: #007bff;"/>
-                <Label text="☆" style="-fx-font-size: 32px; -fx-text-fill: #007bff;"/>
-                <Label text="☆" style="-fx-font-size: 32px; -fx-text-fill: #007bff;"/>
-                <Label text="☆" style="-fx-font-size: 32px; -fx-text-fill: #007bff;"/>
-            </children>
+        <Label text="How would you rate your experience at our hotel?"
+               style="-fx-text-fill: #a0a0a0; -fx-font-size: 14px;"/>
+
+        <HBox id="ratingStars" alignment="CENTER" spacing="10">
+            <Label fx:id="star1" text="☆" style="-fx-font-size: 40px; -fx-text-fill: #d3d3d3;"
+                   onMouseClicked="#handleStarClick" onMouseEntered="#handleStarHover" onMouseExited="#handleStarExit">
+                <Tooltip text="Poor"/>
+            </Label>
+            <Label fx:id="star2" text="☆" style="-fx-font-size: 40px; -fx-text-fill: #d3d3d3;"
+                   onMouseClicked="#handleStarClick" onMouseEntered="#handleStarHover" onMouseExited="#handleStarExit">
+                <Tooltip text="Fair"/>
+            </Label>
+            <Label fx:id="star3" text="☆" style="-fx-font-size: 40px; -fx-text-fill: #d3d3d3;"
+                   onMouseClicked="#handleStarClick" onMouseEntered="#handleStarHover" onMouseExited="#handleStarExit">
+                <Tooltip text="Good"/>
+            </Label>
+            <Label fx:id="star4" text="☆" style="-fx-font-size: 40px; -fx-text-fill: #d3d3d3;"
+                   onMouseClicked="#handleStarClick" onMouseEntered="#handleStarHover" onMouseExited="#handleStarExit">
+                <Tooltip text="Very Good"/>
+            </Label>
+            <Label fx:id="star5" text="☆" style="-fx-font-size: 40px; -fx-text-fill: #d3d3d3;"
+                   onMouseClicked="#handleStarClick" onMouseEntered="#handleStarHover" onMouseExited="#handleStarExit">
+                <Tooltip text="Excellent"/>
+            </Label>
         </HBox>
 
-        <TextArea layoutX="80.0" layoutY="160.0" prefWidth="440.0" prefHeight="120.0"
-                  promptText="Leave comment"
-                  style="-fx-control-inner-background: #2a2a2a; -fx-text-fill: white;"/>
+        <Label fx:id="ratingText" text="" style="-fx-text-fill: #007bff; -fx-font-size: 14px;"/>
 
-        <HBox layoutX="400.0" layoutY="320.0" spacing="20.0">
-            <children>
-                <Button text="Cancel" style="-fx-background-color: #1c1c1c; -fx-text-fill: white;"/>
-                <Button text="Save" style="-fx-background-color: #007bff; -fx-text-fill: white;"/>
-            </children>
+        <TextArea fx:id="commentArea" prefWidth="500.0" prefHeight="150.0"
+                  promptText="Tell us about your experience (optional)..."
+                  style="-fx-control-inner-background: #2a2a2a; -fx-text-fill: white; -fx-prompt-text-fill: #666;"/>
+
+        <HBox alignment="CENTER_RIGHT" spacing="15">
+            <Button fx:id="cancelButton" text="Cancel"
+                    style="-fx-background-color: #2a2a2a; -fx-text-fill: white; -fx-pref-width: 100;"
+                    onAction="#handleCancel"/>
+            <Button fx:id="saveButton" text="Submit Review"
+                    style="-fx-background-color: #007bff; -fx-text-fill: white; -fx-pref-width: 120;"
+                    onAction="#handleSave"/>
         </HBox>
-    </children>
+    </VBox>
 </AnchorPane>

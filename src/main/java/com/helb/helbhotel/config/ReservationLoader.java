@@ -7,11 +7,12 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class ReservationLoader {
 
     public static List<Reservation> loadValidReservations()   {
         try{
-            File file = new File("..\\reservation.csv");
+            File file = new File(".."+File.separatorChar+"reservation.csv");
             List<Reservation> validReservations = new ArrayList<>();
 
             try (BufferedReader br = new BufferedReader(new FileReader(file))) {
@@ -72,7 +73,8 @@ public class ReservationLoader {
 
     public static boolean removeReservation(Reservation reservationToRemove) {
         try {
-            File file = new File("..\\reservation.csv");
+
+            File file = new File(".."+File.separatorChar+"reservation.csv");
             List<String> lines = new ArrayList<>();
             boolean removed = false;
 
