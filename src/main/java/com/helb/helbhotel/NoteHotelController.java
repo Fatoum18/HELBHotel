@@ -1,4 +1,6 @@
 package com.helb.helbhotel;
 
-public class NoteHotel {
+public class NoteHotelController {
+
+
 }

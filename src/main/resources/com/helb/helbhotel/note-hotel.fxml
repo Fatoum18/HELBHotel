@@ -1,14 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.Button?>
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="$CONTROLLER_NAME$"
-            prefHeight="400.0" prefWidth="600.0" >
+            fx:controller="com.helb.helbhotel.NoteHotelController"
+            prefHeight="400.0" prefWidth="600.0"
+            style="-fx-background-color: #1e1b23;">
 
+    <children>
+        <Label layoutX="280.0" layoutY="20.0" text="Note"
+               style="-fx-text-fill: white; -fx-font-size: 18px;"/>
+
+        <HBox layoutX="120.0" layoutY="80.0" spacing="20.0" alignment="CENTER">
+            <children>
+                <Label text="★" style="-fx-font-size: 32px; -fx-text-fill: #007bff;"/>
+                <Label text="☆" style="-fx-font-size: 32px; -fx-text-fill: #007bff;"/>
+                <Label text="☆" style="-fx-font-size: 32px; -fx-text-fill: #007bff;"/>
+                <Label text="☆" style="-fx-font-size: 32px; -fx-text-fill: #007bff;"/>
+                <Label text="☆" style="-fx-font-size: 32px; -fx-text-fill: #007bff;"/>
+            </children>
+        </HBox>
+
+        <TextArea layoutX="80.0" layoutY="160.0" prefWidth="440.0" prefHeight="120.0"
+                  promptText="Leave comment"
+                  style="-fx-control-inner-background: #2a2a2a; -fx-text-fill: white;"/>
+
+        <HBox layoutX="400.0" layoutY="320.0" spacing="20.0">
+            <children>
+                <Button text="Cancel" style="-fx-background-color: #1c1c1c; -fx-text-fill: white;"/>
+                <Button text="Save" style="-fx-background-color: #007bff; -fx-text-fill: white;"/>
+            </children>
+        </HBox>
+    </children>
 </AnchorPane>
