@@ -1,4 +1,5 @@
 module com.helb.helbhotel {
+    requires static lombok;
     requires javafx.controls;
     requires javafx.fxml;
 
@@ -7,7 +8,7 @@ module com.helb.helbhotel {
     requires net.synedra.validatorfx;
     requires org.kordamp.ikonli.javafx;
     requires org.kordamp.bootstrapfx.core;
-    requires lombok;
+
 
     opens com.helb.helbhotel to javafx.fxml;
     exports com.helb.helbhotel;
