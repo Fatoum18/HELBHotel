@@ -1,6 +1,5 @@
 package com.helb.helbhotel.config;
 
-import com.helb.helbhotel.ConfigParse;
 import com.helb.helbhotel.model.Reservation;
 
 import java.io.*;
