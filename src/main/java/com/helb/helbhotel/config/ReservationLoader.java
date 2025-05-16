@@ -16,7 +16,7 @@ public class ReservationLoader {
 
             try (BufferedReader br = new BufferedReader(new FileReader(file))) {
                 String line;
-                br.readLine(); // Skip header
+//                br.readLine(); // Skip header
 
                 while ((line = br.readLine()) != null) {
                     String[] fields = line.split(",", -1); // keep empty fields
@@ -81,7 +81,7 @@ public class ReservationLoader {
             try (BufferedReader br = new BufferedReader(new FileReader(file))) {
                 String line;
                 // Keep the header
-                lines.add(br.readLine());
+//                lines.add(br.readLine());
 
                 while ((line = br.readLine()) != null) {
                     String[] fields = line.split(",", -1);
