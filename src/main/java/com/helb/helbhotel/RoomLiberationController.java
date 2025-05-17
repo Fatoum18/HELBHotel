@@ -70,7 +70,7 @@ public class RoomLiberationController {
             }else if(roomType.equalsIgnoreCase("L")){
                 percent = 100;
             }
-           String code = DiscountCodeGenerator.generateDiscountCode(percent);
+           String code = DiscountCodeGenerator.generateCode(percent);
             showAlert(code);
             System.out.println("code : "+code);
 
